@@ -5,7 +5,7 @@ License:        GPLv2+
 Summary:        A GNU collection of diff utilities
 Url:            http://www.gnu.org/software/diffutils/diffutils.html
 Group:          Applications/Text
-Source:         ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
+Source:         %{name}-%{version}.tar.gz
 Source1001: packaging/diffutils.manifest 
 Patch0:         diffutils-cmp-s-empty.patch
 
