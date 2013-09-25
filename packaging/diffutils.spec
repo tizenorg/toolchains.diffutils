@@ -44,6 +44,10 @@ do
 	done;
 done
 
+# license
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
+
 %clean
 rm -rf %{buildroot}
 
@@ -57,3 +61,4 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/diff.info*gz
+/usr/share/license/%{name}
