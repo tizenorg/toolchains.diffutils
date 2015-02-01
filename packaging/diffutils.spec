@@ -29,7 +29,7 @@ Install diffutils if you need to compare text files.
 %build
 cp %{SOURCE1001} .
 %configure --disable-nls
-make PR_PROGRAM=%{_bindir}/pr
+make %{?_smp_mflags} PR_PROGRAM=%{_bindir}/pr
 
 %install
 %make_install
@@ -57,4 +57,3 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/diff.info*gz
-
