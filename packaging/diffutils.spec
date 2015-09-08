@@ -1,12 +1,12 @@
 Name:           diffutils
 Version:        3.0
-Release:        1
+Release:        3
 License:        GPLv2+
 Summary:        A GNU collection of diff utilities
 Url:            http://www.gnu.org/software/diffutils/diffutils.html
 Group:          Applications/Text
-Source:         %{name}-%{version}.tar.gz
-Source1001: packaging/diffutils.manifest 
+Source:         ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
+Source1001:     %{name}.manifest
 Patch0:         diffutils-cmp-s-empty.patch
 
 %description
@@ -24,25 +24,36 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
-%patch0 -p1 
+%patch0 -p1
 
 %build
 cp %{SOURCE1001} .
 %configure --disable-nls
-make PR_PROGRAM=%{_bindir}/pr
+make %{?_smp_mflags} PR_PROGRAM=%{_bindir}/pr
 
 %install
 %make_install
 
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/license
+for keyword in LICENSE COPYING COPYRIGHT;
+do
+	for file in `find %{_builddir} -name $keyword`;
+	do
+		cat $file >> $RPM_BUILD_ROOT%{_datadir}/license/%{name};
+		echo "";
+	done;
+done
+
 %clean
 rm -rf %{buildroot}
 
-%docs_package 
+%docs_package
 
-%files 
-%manifest diffutils.manifest
+%files
 %defattr(-,root,root,-)
+%manifest %{name}.manifest
 %doc NEWS README COPYING
+%{_datadir}/license/%{name}
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/diff.info*gz
