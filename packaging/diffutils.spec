@@ -8,6 +8,7 @@ Group:          Applications/Text
 Source:         ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Source1001:     %{name}.manifest
 Patch0:         diffutils-cmp-s-empty.patch
+Patch1:         diffutils-gets.patch
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -25,6 +26,7 @@ Install diffutils if you need to compare text files.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1 -b .patch1
 
 %build
 cp %{SOURCE1001} .
@@ -37,11 +39,11 @@ make %{?_smp_mflags} PR_PROGRAM=%{_bindir}/pr
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/license
 for keyword in LICENSE COPYING COPYRIGHT;
 do
-	for file in `find %{_builddir} -name $keyword`;
-	do
-		cat $file >> $RPM_BUILD_ROOT%{_datadir}/license/%{name};
-		echo "";
-	done;
+    for file in `find %{_builddir} -name $keyword`;
+    do
+        cat $file >> $RPM_BUILD_ROOT%{_datadir}/license/%{name};
+        echo "";
+    done;
 done
 
 %clean
